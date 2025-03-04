@@ -1,24 +1,45 @@
-import logo from './logo.svg';
+import { useState } from 'react';
 import './App.css';
+import useJeevaOnlineStatus from "./jeeva.js";
 
-function App() {
+
+function StatusBar({isOnline}) {
+  return <h1>{isOnline ? 'Online':' Disconnected'}</h1>;
+}
+
+function ActivateButton({setIsOnline}) {
+
+
+  
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <button onClick={()=>setIsOnline (true)}>
+     active
+    </button>
+  );
+}
+function DeactivateButton({setIsOnline}) {
+
+
+  
+
+  return (
+    <button onClick={()=>setIsOnline (false)}>
+     deactive
+    </button>
+  );
+}
+function App() {
+  const isOnlineFromHook=useJeevaOnlineStatus();
+  const [isOnline, setIsOnline]=useState(isOnlineFromHook);
+
+  return (
+    <>
+      <ActivateButton setIsOnline={setIsOnline}/>
+      <DeactivateButton setIsOnline={setIsOnline}/>
+      <StatusBar isOnline={isOnline}/>
+   </>
+   
   );
 }
 
